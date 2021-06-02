@@ -23,3 +23,8 @@ git clone https://github.com/AngelPone/weread2Roam
 
 * Python3
 * Alfred
+
+
+## 已知问题
+
+若微信读书的划线存在跨段落的情况，粘贴至Roam层级会错乱，难以避免。

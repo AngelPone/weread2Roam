@@ -14,6 +14,7 @@ def highlights_to_roamStyle(h):
 
 
 def deal_highlight(string):
+    path = Path(__file__).parent
     highlights = [i.strip('\\n').strip() for i in string.split('>>>')]
     chapter_notes = {
         'chapterName': "",
@@ -37,8 +38,8 @@ def deal_highlight(string):
         else:
             continue
     chapters.append(chapter_notes)
-    if Path(f'./save_{bookName}.pkl').exists():
-        saved_highlights = pkl.load(Path(f'./save_{bookName}.pkl').open('rb'))
+    if (path/f"save_{bookName}.pkl").exists():
+        saved_highlights = pkl.load((path/f"save_{bookName}.pkl").open('rb'))
         saved_chapters = [i['chapterName'] for i in saved_highlights]
         now_chapters = [i['chapterName'] for i in chapters]
         need_export = []
@@ -54,12 +55,14 @@ def deal_highlight(string):
                 'chapterName': chapterName,
                 'chapterNotes': now_highlights
             })
-        with open(f'./save_{bookName}.pkl', 'wb') as f:
-            pkl.dump(chapters, f)
+        f = (path/f"save_{bookName}.pkl").open('wb')
+        pkl.dump(chapters, f)
+        f.close()
         return highlights_to_roamStyle(need_export)
     else:
-        with open(f'./save_{bookName}.pkl', 'wb') as f:
-            pkl.dump(chapters, f)
+        f = (path/f"save_{bookName}.pkl").open('wb')
+        pkl.dump(chapters, f)
+        f.close()
         return highlights_to_roamStyle(chapters)
 
             
